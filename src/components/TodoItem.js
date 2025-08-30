@@ -1,14 +1,9 @@
-// src/components/TodoItem.js
+import React, { useState } from "react";
 
-import React, { useState } from "react"; // DIUBAH: Impor useState
-
-// DIUBAH: Terima props onUpdateTodo
-const TodoItem = ({ todo, onToggleCompleted, onDeleteTodo, onUpdateTodo }) => {
-  // BARU: State untuk mengelola mode edit dan teks yang diedit
+const TodoItem = ({ todo, index, onToggleCompleted, onDeleteTodo, onUpdateTodo }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(todo.task);
 
-  // BARU: Fungsi untuk menangani penyimpanan
   const handleSave = () => {
     if (editText.trim()) {
       onUpdateTodo(todo.id, editText);
@@ -16,148 +11,72 @@ const TodoItem = ({ todo, onToggleCompleted, onDeleteTodo, onUpdateTodo }) => {
     }
   };
 
-  // BARU: Tampilan saat mode edit aktif
   if (isEditing) {
     return (
-      <li
-        style={{
-          marginBottom: "10px",
-          border: "1px solid white",
-          padding: "10px",
-          borderRadius: "8px",
-          backgroundColor: "#2d3d3d",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            width: "100%",
-            justifyContent: "space-between",
-          }}
-        >
-          <input
-            type="text"
-            value={editText}
-            onChange={(e) => setEditText(e.target.value)}
-            style={{
-              flexGrow: 1,
-              padding: "8px",
-              marginRight: "10px",
-              borderRadius: "4px",
-              border: "1px solid #61dafb",
-            }}
-          />
-          <div style={{ display: "flex", gap: "5px" }}>
+      <tr className="bg-gray-800 text-white">
+        <td colSpan="3" className="p-3">
+          <div className="flex items-center gap-3">
+            <input
+              type="text"
+              value={editText}
+              onChange={(e) => setEditText(e.target.value)}
+              className="flex-grow p-2 rounded-md border border-cyan-400 bg-gray-900 text-white"
+            />
             <button
               onClick={handleSave}
-              style={{
-                padding: "5px 10px",
-                borderRadius: "4px",
-                backgroundColor: "lightgreen",
-                color: "#282c34",
-                border: "none",
-                cursor: "pointer",
-              }}
+              className="px-4 py-1 rounded-lg bg-green-500 text-white hover:bg-green-400 text-sm"
             >
               Simpan
             </button>
             <button
               onClick={() => setIsEditing(false)}
-              style={{
-                padding: "5px 10px",
-                borderRadius: "4px",
-                backgroundColor: "lightcoral",
-                color: "white",
-                border: "none",
-                cursor: "pointer",
-              }}
+              className="px-4 py-1 rounded-lg bg-red-500 text-white hover:bg-red-400 text-sm"
             >
               Batal
             </button>
           </div>
-        </div>
-      </li>
+        </td>
+      </tr>
     );
   }
 
-  // Tampilan default (tidak dalam mode edit)
   return (
-    <li
-      style={{
-        marginBottom: "10px",
-        border: "1px solid white",
-        padding: "10px",
-        borderRadius: "8px",
-        backgroundColor: todo.completed ? "#2d3d3d" : "transparent",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "flex-start",
-      }}
+    <tr
+      className={`${
+        index % 2 === 0 ? "bg-gray-800" : "bg-gray-700"
+      } hover:bg-gray-600 transition text-sm`}
     >
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          width: "100%",
-          justifyContent: "space-between",
-        }}
-      >
-        <h3
-          style={{
-            margin: 0,
-            textDecoration: todo.completed ? "line-through" : "none",
-          }}
+      <td className="p-3 border border-gray-700 text-white">
+        {todo.completed ? <s>{todo.task}</s> : todo.task}
+      </td>
+      <td className="p-3 border border-gray-700 text-center">
+        {todo.completed ? "✅ Selesai" : "⌛ Belum"}
+      </td>
+      <td className="p-3 border border-gray-700 text-right space-x-2">
+        <button
+          onClick={() => setIsEditing(true)}
+          className="px-3 py-1 rounded-md bg-cyan-500 text-white hover:bg-cyan-400 text-xs"
         >
-          {todo.task}
-        </h3>
-        <div style={{ display: "flex", gap: "5px" }}>
-          {/* BARU: Tombol untuk masuk ke mode edit */}
-          <button
-            onClick={() => setIsEditing(true)}
-            style={{
-              padding: "5px 10px",
-              borderRadius: "4px",
-              backgroundColor: "#61dafb",
-              color: "#282c34",
-              border: "none",
-              cursor: "pointer",
-            }}
-          >
-            Update
-          </button>
-          <button
-            onClick={() => onToggleCompleted(todo.id, todo.completed)}
-            style={{
-              padding: "5px 10px",
-              borderRadius: "4px",
-              backgroundColor: todo.completed ? "salmon" : "lightgreen",
-              color: "#282c34",
-              border: "none",
-              cursor: "pointer",
-            }}
-          >
-            {todo.completed ? "Belum Selesai" : "Selesai"}
-          </button>
-          <button
-            onClick={() => onDeleteTodo(todo.id)}
-            style={{
-              padding: "5px 10px",
-              borderRadius: "4px",
-              backgroundColor: "tomato",
-              color: "white",
-              border: "none",
-              cursor: "pointer",
-            }}
-          >
-            Hapus
-          </button>
-        </div>
-      </div>
-    </li>
+          Update
+        </button>
+        <button
+          onClick={() => onToggleCompleted(todo.id, todo.completed)}
+          className={`px-3 py-1 rounded-md text-white text-xs ${
+            todo.completed
+              ? "bg-yellow-500 hover:bg-yellow-400"
+              : "bg-green-500 hover:bg-green-400"
+          }`}
+        >
+          {todo.completed ? "Belum" : "Selesai"}
+        </button>
+        <button
+          onClick={() => onDeleteTodo(todo.id)}
+          className="px-3 py-1 rounded-md bg-red-500 text-white hover:bg-red-400 text-xs"
+        >
+          Hapus
+        </button>
+      </td>
+    </tr>
   );
 };
 

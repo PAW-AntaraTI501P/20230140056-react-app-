@@ -1,33 +1,51 @@
+/* App.css */
+
+/* Root container */
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  background-color: #abb0bc; /* Tailwind bg-gray-900 */
+  color: #f3f4f6; /* text-gray-100 */
+  font-family: 'Inter', 'Roboto', 'Segoe UI', sans-serif;
 }
 
+/* Header (jika ada komponen header khusus) */
+.App-header {
+  background-color: #1f2937; /* bg-gray-800 */
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+/* Links */
 .App-link {
-  color: #61dafb;
+  color: #22d3ee; /* cyan-400 */
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
+.App-link:hover {
+  color: #06b6d4; /* cyan-500 */
+}
+
+/* Buttons (default style biar konsisten kalau ada <button> tanpa Tailwind) */
+button {
+  background-color: #22d3ee;
+  color: #111827;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #06b6d4;
+}
+
+/* Animasi opsional (jika masih ingin ada App-logo spinning) */
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

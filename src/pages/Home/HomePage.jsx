@@ -31,6 +31,7 @@ const HomePage = () => {
   return (
     <div style={containerStyle}>
       <h1>Selamat Datang di Aplikasi Todo List</h1>
+      
       <p>Kelola semua tugas Anda dengan mudah dan efisien.</p>
       <Link to="/todos" style={buttonStyle}>
         Lihat Daftar Todo

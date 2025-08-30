@@ -44,8 +44,8 @@ const TodoForm = ({ onAddTodo }) => {
           type="submit"
           style={{
             padding: "10px",
-            backgroundColor: "#61dafb",
-            color: "#282c34",
+            backgroundColor: "#c2cdd1ff",
+            color: "#193a7dff",
             border: "none",
             borderRadius: "4px",
             cursor: "pointer",
